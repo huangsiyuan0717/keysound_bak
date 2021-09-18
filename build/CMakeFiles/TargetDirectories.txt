@@ -1,0 +1,3 @@
+/home/hsy/study_data/C++_study/C++system/keysound_bak/build/CMakeFiles/rebuild_cache.dir
+/home/hsy/study_data/C++_study/C++system/keysound_bak/build/CMakeFiles/keysound.dir
+/home/hsy/study_data/C++_study/C++system/keysound_bak/build/CMakeFiles/edit_cache.dir

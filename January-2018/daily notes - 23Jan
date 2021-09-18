@@ -1,2 +1,0 @@
-By.xpath("//input[@value='保存' and @type='button']")
-aui_buttons

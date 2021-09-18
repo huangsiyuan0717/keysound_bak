@@ -1,0 +1,1 @@
+/usr/bin/c++    -rdynamic CMakeFiles/keysound.dir/src/main.cpp.o  -o keysound 

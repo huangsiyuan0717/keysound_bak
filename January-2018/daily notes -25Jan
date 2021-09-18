@@ -1,9 +1,0 @@
-1.不同的设备，不同的commond fields,把正确的commond fields传正确；
-2.将正确的commond fields 显示到右边的panel里。
-
-
-3.中继的common fields被放到了ubnt的文件夹内，记住下次取的时候要从这个文件夹里取。
-    到底是把所有的commond fields都放在一个excel中，还是各放在不同的excel中呢？ ----> 先放在不同的excle中吧  ---> 已完成！
-
-4.把不同的设备的common fields 放到首页中相应的区域 --> done
-    并实现修改功能 ---> done
