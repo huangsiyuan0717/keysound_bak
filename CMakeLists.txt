@@ -7,3 +7,4 @@ include_directories(
 )
 
 add_executable(keysound src/main.cpp)
+add_executable(test test.cpp)
