@@ -34,8 +34,6 @@ void kill_exists_process(){
 int main(int argc, char** argv){
     process_command_line_arguments(argc, argv);
 
-    int a;
-    std::cin >> a;
     if(args.kill){
         kill_exists_process();
         exit(EXIT_SUCCESS);
