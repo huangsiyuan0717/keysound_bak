@@ -6,5 +6,5 @@ include_directories(
     "./include/"
 )
 
-add_executable(keysound src/main.cpp)
+add_executable(keysound src/main.cpp src/Audio.cpp)
 add_executable(test test.cpp)

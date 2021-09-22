@@ -39,5 +39,30 @@ int main(int argc, char** argv){
         exit(EXIT_SUCCESS);
     }
 
+    std::string str;
+    switch (args.flag)
+    {
+    case 'd':
+        str = args.dir;
+        break;
+    case 'f':
+        str = args.wav_file;
+        break;
+    case 'j':
+        str = args.json;
+        break;
+    default:
+        exit(EXIT_FAILURE);
+    }
+
+    if(args.daemon){
+        if(daemon(1, 0) == -1){
+            std::cout << "daemon creat error" << std::endl;
+            exit(EXIT_FAILURE);
+        }
+    }    
+
+
+
     return 0;
 }
