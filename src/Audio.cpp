@@ -1,5 +1,6 @@
 #include "Audio.hpp"
 #include "keycode.hpp"
+#include <fstream>
 
 Audio::Audio(const std::string str, int flag) : m_Max_len(0), init_property(false){
     init(str, flag);
@@ -93,7 +94,43 @@ void Audio::from_file(const std::string& str){
 
 };
 
-bool Audio::read_wav(const std::string &, WAV_DATA &){
+bool Audio::read_wav(const std::string& file, WAV_DATA& wav_data){
+    wav_data.data = nullptr;
+    wav_data.len = 0;
+    wav_data.bits_per_sample = 0;
+
+    WAVE_HEADER header;
+    std::ifstream ifs(file);
+    if(ifs.is_open()){
+        ifs.read((char *)&header, sizeof(WAVE_HEADER));
+        
+        if(!tag_is_right(header.riff_id, header.riff_type)){
+            std::cout << "this file is not a wave " << std::endl;
+            ifs.close();
+            return false;
+        }
+
+        if(header.fmt_audio_format == 1){
+            if(!init_property){
+                m_Channels = header.fmt_channels;
+                m_Bits_per_sample = header.fmt_bits_per_sample;
+                m_Sample_rate = header.fmt_sample_rate;
+                init_property = true;
+            }else if(header.fmt_channels != m_Channels 
+                  || header.fmt_bits_per_sample != m_Bits_per_sample
+                  || header.fmt_sample_rate != m_Sample_rate){
+                      ifs.close();
+                      return false;
+                  }
+        }else{
+            std::cout << file << "has not pcm tag" << std::endl;
+            ifs.close();
+            return false;
+        }
+        
+        wav_data.len = header.data_size;
+        wav_data.bits_per_sample = 
+    }
     
 };
 
@@ -102,7 +139,10 @@ bool Audio::is_wav(const std::string &str) const{
 };
 
 bool Audio::tag_is_right(const uint8_t *riff_id, const uint8_t *riff_type) const{
-
+    return (riff_id[0] == 'R' && riff_id[1] == 'I' &&
+            riff_id[2] == 'F' && riff_id[3] == "F" &&
+            riff_type[0] == 'W' && riff_type[1] == 'A' &&
+            riff_type[2] == 'V' && riff_type[3] == 'E');
 };
 
 
