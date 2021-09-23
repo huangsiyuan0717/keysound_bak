@@ -72,12 +72,12 @@ private:
     uint16_t m_Bits_per_sample;
 
     bool read_wav(const std::string &, WAV_DATA &);
-    void init(const std::string &);
+    void init(const std::string&);
 
-    void init(const std::string &, int);
-    void from_dir(const std::string &str);
-    void from_json(const std::string &str);
-    void from_file(const std::string &str);
+    void init(const std::string&, int);
+    void from_dir(const std::string& str);
+    void from_json(const std::string& str);
+    void from_file(const std::string& str);
 
     bool file_exists(const std::string &file) const {
         struct stat buffer;

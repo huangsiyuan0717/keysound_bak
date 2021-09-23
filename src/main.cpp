@@ -1,3 +1,4 @@
+#include "Audio.hpp"
 #include"args.hpp"
 #include<errno.h>
 #include<fstream>
@@ -62,6 +63,8 @@ int main(int argc, char** argv){
         }
     }    
 
-
+    
+    Audio audio(str, args.flag);
+    
     return 0;
 }
