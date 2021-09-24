@@ -1,0 +1,6 @@
+{
+    "dir": "./audio",
+
+    "default": "typewriter-key.wav",
+    "enter": "typewriter-enter.wav"
+}

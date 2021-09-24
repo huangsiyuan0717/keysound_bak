@@ -44,7 +44,6 @@ void Audio::init(const std::string& str, int flag){
                 err = "please use directory";
                 print_err(err);
             }
-            std::cout << "test" << std::endl;
             return;
         case 'f':
             if (is_wav(str)) from_file(str);
@@ -90,8 +89,14 @@ void Audio::from_json(const std::string& str){
 
 };
 
-void Audio::from_file(const std::string& str){
-
+void Audio::from_file(const std::string& file){
+    if(read_wav(file, wav_datas[0])){
+        for(int i = 1; i < 256; i++){
+            datas[i] = 0;
+        }
+    }else{
+        std::cout << "read " << file << "error" << std::endl;
+    }
 };
 
 bool Audio::read_wav(const std::string& file, WAV_DATA& wav_data){
@@ -129,22 +134,42 @@ bool Audio::read_wav(const std::string& file, WAV_DATA& wav_data){
         }
         
         wav_data.len = header.data_size;
-        wav_data.bits_per_sample = 
+        wav_data.bits_per_sample = header.fmt_bits_per_sample;
+        wav_data.data = new uint8_t[wav_data.len];
+
+        ifs.read((char*)wav_data.data, wav_data.len);
+
+        if(wav_data.len > m_Max_len) m_Max_len = wav_data.len;
+        ifs.close();
+        return true;
     }
     
 };
 
-bool Audio::is_wav(const std::string &str) const{
+bool Audio::is_wav(const std::string& file) const{
+    WAVE_HEADER header;
+    std::ifstream ifs(file);
 
+    if(ifs.is_open()){
+        ifs.read((char*)&header, sizeof(WAVE_HEADER));
+        ifs.close();
+        return tag_is_right(header.riff_id, header.riff_type);
+    }else{
+        ifs.close();
+        return false;
+    }
 };
 
 bool Audio::tag_is_right(const uint8_t *riff_id, const uint8_t *riff_type) const{
     return (riff_id[0] == 'R' && riff_id[1] == 'I' &&
-            riff_id[2] == 'F' && riff_id[3] == "F" &&
+            riff_id[2] == 'F' && riff_id[3] == 'F' &&
             riff_type[0] == 'W' && riff_type[1] == 'A' &&
             riff_type[2] == 'V' && riff_type[3] == 'E');
 };
 
+WAV_DATA Audio::get_way_by_code(uint16_t code){
+
+}
 
 Audio::~Audio(){
 
