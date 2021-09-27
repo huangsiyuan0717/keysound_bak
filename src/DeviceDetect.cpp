@@ -30,19 +30,6 @@ std::string getEventId(std::string buf){
     return event_id;
 }
 
-void addEventId(std::string event_id){
-    mtx.lock();
-    key_detects[event_id] = event_id;
-    mtx.unlock();
-}
-
-bool eventIdExists(std::string str_event_id){
-    if(!key_detects[str_event_id].empty()) return true;
-    else return false;
-}
-
-
-
 void startExistsDevice(Audio *audio, Mixer *mixer){
     FILE *pip = popen(cmd1.c_str(), "r");
 

@@ -63,7 +63,10 @@ void keyDetect(std::string str_event_id, Audio *audio, Mixer *mixer){
                 }
                 default:
                     break;
+                }
         }
-    }
     if(fd > 0) close(fd);
+    }
 }
+
+
