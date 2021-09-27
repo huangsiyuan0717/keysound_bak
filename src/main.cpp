@@ -1,9 +1,43 @@
 #include "Audio.hpp"
 #include"args.hpp"
+#include "Mixer.hpp"
+
 #include<errno.h>
-#include<fstream>
 #include <signal.h>
 #include <unistd.h>
+#include <fcntl.h>
+#include <string>
+#include <cstring>
+
+const std::string PID_FILE = "/tmp/keysound_pid";
+
+void create_pid_file(){
+    int fd = open(PID_FILE.c_str(), O_WRONLY | O_CREAT | O_EXCL, 0644);
+
+    if(fd != -1){
+        char pid[16] = {0};
+        sprintf(pid, "%d", getpid());
+
+        if(write(fd, pid, strlen(pid)) == -1){
+            close(fd);
+            remove(PID_FILE.c_str());
+
+            std::cout << "write pid file error" << std::endl;
+        }else{
+            close(fd);
+        }
+    }else{
+        if(errno == EEXIST){
+            std::cout << "another process is running " << std::endl;
+        }else{
+            std::cout << "read file error" << std::endl;
+        }
+        exit(EXIT_FAILURE);
+    }
+}
+
+
+
 
 void kill_exists_process(){
     std::string cmd = 
@@ -65,6 +99,11 @@ int main(int argc, char** argv){
 
     
     Audio audio(str, args.flag);
+    Mixer mixer(audio.get_max_len());
+
+    kill_exists_process();
+    create_pid_file();
+    
     
     
     return 0;
