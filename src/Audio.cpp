@@ -168,7 +168,12 @@ bool Audio::tag_is_right(const uint8_t *riff_id, const uint8_t *riff_type) const
 };
 
 WAV_DATA Audio::get_way_by_code(uint16_t code){
-
+    if(code > 255){
+        return {nullptr, 0, 0, 0};
+    }else if(datas[code] > 255){
+        return {nullptr, 0, 0, 0};
+    }
+    return wav_datas[datas[code]];
 }
 
 Audio::~Audio(){
