@@ -8,6 +8,7 @@
 #include <fcntl.h>
 #include <string>
 #include <cstring>
+#include <thread>
 
 const std::string PID_FILE = "/tmp/keysound_pid";
 
@@ -104,6 +105,7 @@ int main(int argc, char** argv){
     kill_exists_process();
     create_pid_file();
     
+    std::thread th1;
     
     
     return 0;
